@@ -13,11 +13,11 @@ class SingleProductGrid extends StatelessWidget {
 
   const SingleProductGrid({
     Key key,
-    this.name: 'Produk Single',
-    this.size: '100g',
-    this.price: '10K',
+    this.name = 'Produk Single',
+    this.size = '100g',
+    this.price = '10K',
     this.id,
-    this.image: const NetworkImage('https://placehold.it/200'),
+    this.image = const NetworkImage('https://placehold.it/200'),
   }) : super(key: key);
 
   @override

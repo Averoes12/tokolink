@@ -13,12 +13,12 @@ class SingleNewsList extends StatelessWidget {
 
   const SingleNewsList({
     Key key,
-    this.author: 'Author',
-    this.date: '06/07/2020',
-    this.title: 'Title of news',
-    this.shortDescription: 'Short Description',
+    this.author = 'Author',
+    this.date = '06/07/2020',
+    this.title = 'Title of news',
+    this.shortDescription = 'Short Description',
     this.onTap,
-    this.image: const NetworkImage('https://placehold.it/500'),
+    this.image = const NetworkImage('https://placehold.it/500'),
   }) : super(key: key);
 
   @override

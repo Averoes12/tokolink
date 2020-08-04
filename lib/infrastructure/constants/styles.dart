@@ -5,13 +5,34 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 
 class StyleConfig {
-  static double _radius = 20;
+  static final double _radius = 20;
 
   static BorderRadiusGeometry mainBoxBorder = BorderRadius.only(
     topLeft: Radius.circular(_radius),
     topRight: Radius.circular(0),
     bottomLeft: Radius.circular(_radius),
     bottomRight: Radius.circular(_radius),
+  );
+
+  static BorderRadiusGeometry fullBoxBorder = BorderRadius.only(
+    topLeft: Radius.circular(_radius),
+    topRight: Radius.circular(_radius),
+    bottomLeft: Radius.circular(_radius),
+    bottomRight: Radius.circular(_radius),
+  );
+
+  static BorderRadiusGeometry confirmRightBoxBorder = BorderRadius.only(
+    topLeft: Radius.circular(0),
+    topRight: Radius.circular(0),
+    bottomLeft: Radius.circular(0),
+    bottomRight: Radius.circular(_radius),
+  );
+
+  static BorderRadiusGeometry confirmLeftBoxBorder = BorderRadius.only(
+    topLeft: Radius.circular(0),
+    topRight: Radius.circular(0),
+    bottomLeft: Radius.circular(_radius),
+    bottomRight: Radius.circular(0),
   );
 
   static PinBoxDecoration defaultPinBoxDecoration = (

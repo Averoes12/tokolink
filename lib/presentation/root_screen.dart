@@ -25,15 +25,15 @@ class _RootScreenState extends State<RootScreen> {
     return Navigator(
       onGenerateRoute: (context) => MaterialPageRoute(
         builder: (context) {
-          MediaQueryData _mediaQueryData = MediaQuery.of(context);
-          double _screenWidth = _mediaQueryData.size.width;
-          double _screenHeight = _mediaQueryData.size.height;
-          double _blockSizeHorizontal = _screenWidth / 100;
-          double _blockSizeVertical = _screenHeight / 100;
-          double _safeAreaHorizontal = _mediaQueryData.padding.left + _mediaQueryData.padding.right;
-          double _safeAreaVertical = _mediaQueryData.padding.top + _mediaQueryData.padding.bottom;
-          double _safeBlockHorizontal = (_screenWidth - _safeAreaHorizontal) / 100;
-          double _safeBlockVertical = (_screenHeight - _safeAreaVertical) / 100;
+          final _mediaQueryData = MediaQuery.of(context);
+          final _screenWidth = _mediaQueryData.size.width;
+          final _screenHeight = _mediaQueryData.size.height;
+          final _blockSizeHorizontal = _screenWidth / 100;
+          final _blockSizeVertical = _screenHeight / 100;
+          final _safeAreaHorizontal = _mediaQueryData.padding.left + _mediaQueryData.padding.right;
+          final _safeAreaVertical = _mediaQueryData.padding.top + _mediaQueryData.padding.bottom;
+          final _safeBlockHorizontal = (_screenWidth - _safeAreaHorizontal) / 100;
+          final _safeBlockVertical = (_screenHeight - _safeAreaVertical) / 100;
 
           return SizeConfig(
             child: widget,

@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
-import 'package:tokolink/presentation/widgets/label_widget.dart';
+import 'package:tokolink/presentation/order/widgets/single_order_card_widget.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -28,99 +29,29 @@ class _TestScreenState extends State<TestScreen> {
         title: Text('Test Screen'),
         centerTitle: true,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.red,
-        currentIndex: 0,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home'), backgroundColor: Colors.red),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-        ],
-      ),
-      floatingActionButton: keyboardOpen
-          ? SizedBox()
-          : FloatingActionButton(
-              elevation: 0,
-              backgroundColor: Colors.red,
-              onPressed: () {},
-              child: Container(
-                margin: EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green,
-                ),
-                child: Center(
-                  child: Icon(Icons.add),
-                ),
-              ),
-            ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              LabelWidget(text: 'Recipients name'),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'gageg', prefixIcon: Icon(Icons.search)),
-              ),
-              SizedBox(height: 20),
-              RaisedButton(
-                onPressed: null,
-                child: Text('Button'),
-              ),
-              FlatButton(
-                child: Text('gaga'),
-                onPressed: () {},
-              )
-            ],
-          ),
+        padding: EdgeInsets.all(30),
+        child: SingleOrderCardWidget(
+          goods: ['Oranges (10kg)', 'Cabbage (1kg), Beef (2ons), Chicken (1kg)'],
         ),
       ),
     );
   }
+}
+
+class TicketClipPath extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final radius = 10.0;
+    final path = Path();
+    path.arcToPoint(Offset(0, 30), radius: Radius.circular(radius));
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 30);
+    path.arcToPoint(Offset(size.width, 0), radius: Radius.circular(radius));
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

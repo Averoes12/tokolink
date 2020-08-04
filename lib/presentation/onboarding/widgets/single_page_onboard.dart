@@ -13,7 +13,7 @@ class SinglePageOnBoard extends StatelessWidget {
     @required this.image,
     @required this.title,
     @required this.description,
-    this.type: 1,
+    this.type = 1,
   }) : super(key: key);
 
   @override

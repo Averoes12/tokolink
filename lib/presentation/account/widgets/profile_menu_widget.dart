@@ -11,8 +11,8 @@ class ProfileMenuWidget extends StatelessWidget {
   const ProfileMenuWidget({
     Key key,
     this.image,
-    this.name: 'Username',
-    this.phone: 'No phone',
+    this.name = 'Username',
+    this.phone = 'No phone',
     this.onTap,
   }) : super(key: key);
 

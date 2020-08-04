@@ -8,6 +8,7 @@ class SizeConfig extends InheritedWidget {
   final double blockSizeVertical;
   final double safeBlockHorizontal;
   final double safeBlockVertical;
+  @override
   final Widget child;
 
   SizeConfig({
@@ -19,7 +20,7 @@ class SizeConfig extends InheritedWidget {
     this.safeBlockHorizontal,
     this.safeBlockVertical,
     @required this.child,
-  });
+  }) : super(child: child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;

@@ -21,9 +21,11 @@ dependencies:
   pin_code_text_field: ^1.6.0
   carousel_slider: ^2.2.1
   dotted_border: ^1.0.6
+  flutter_svg:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic: null
 flutter:
   uses-material-design: true
   assets:

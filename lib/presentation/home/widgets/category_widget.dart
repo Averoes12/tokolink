@@ -35,8 +35,8 @@ class SingleCategoryWidget extends StatelessWidget {
     Key key,
     @required this.image,
     @required this.onTap,
-    this.backgroundColor: ColorConfig.PRIMARY,
-    this.label: 'Category',
+    this.backgroundColor = ColorConfig.PRIMARY,
+    this.label = 'Category',
   }) : super(key: key);
 
   @override

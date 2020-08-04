@@ -12,9 +12,9 @@ class LabelWidget extends StatelessWidget {
   const LabelWidget({
     Key key,
     @required this.text,
-    this.primary: false,
-    this.center: false,
-    this.bigger: false,
+    this.primary = false,
+    this.center = false,
+    this.bigger = false,
   }) : super(key: key);
 
   @override

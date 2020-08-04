@@ -54,15 +54,15 @@ class _OTPScreenState extends State<OTPScreen> {
                         hasTextBorderColor: ColorConfig.N1,
                         maxLength: pinLength,
                         hasError: hasError,
-                        maskCharacter: "😎",
+                        maskCharacter: '😎',
                         onTextChanged: (text) {
                           setState(() {
                             hasError = false;
                           });
                         },
                         onDone: (text) {
-                          print("DONE $text");
-                          print("DONE CONTROLLER ${controller.text}");
+                          print('DONE $text');
+                          print('DONE CONTROLLER ${controller.text}');
                         },
                         wrapAlignment: WrapAlignment.spaceAround,
                         pinBoxDecoration: StyleConfig.defaultPinBoxDecoration,

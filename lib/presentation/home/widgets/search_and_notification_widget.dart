@@ -5,7 +5,7 @@ import 'package:tokolink/presentation/home/search_screen.dart';
 class SearchAndNotificationWidget extends StatelessWidget {
   final bool hasNotification;
 
-  const SearchAndNotificationWidget({Key key, this.hasNotification: false}) : super(key: key);
+  const SearchAndNotificationWidget({Key key, this.hasNotification = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

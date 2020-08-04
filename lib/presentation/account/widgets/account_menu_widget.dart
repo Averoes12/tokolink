@@ -11,8 +11,8 @@ class AccountMenuWidget extends StatelessWidget {
   const AccountMenuWidget({
     Key key,
     this.image,
-    this.title: 'Title',
-    this.subtitle: 'No subtitle',
+    this.title = 'Title',
+    this.subtitle = 'No subtitle',
     this.onTap,
   }) : super(key: key);
 

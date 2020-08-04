@@ -9,7 +9,7 @@ class DashedDivider extends StatelessWidget {
   const DashedDivider({
     this.height = 1,
     this.color = ColorConfig.N3,
-    this.padding: 0,
+    this.padding = 0,
   });
 
   @override
