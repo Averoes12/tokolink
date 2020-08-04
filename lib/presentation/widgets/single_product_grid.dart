@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
 import 'package:tokolink/presentation/widgets/size_config.dart';
@@ -17,7 +18,7 @@ class SingleProductGrid extends StatelessWidget {
     this.size = '100g',
     this.price = '10K',
     this.id,
-    this.image = const NetworkImage('https://placehold.it/200'),
+    this.image,
   }) : super(key: key);
 
   @override
@@ -45,10 +46,10 @@ class SingleProductGrid extends StatelessWidget {
                   ),
                 ),
               ),
-              Image(
-                image: image,
-                fit: BoxFit.fitWidth,
-              ),
+              Builder(builder: (context) {
+                if (image == null) return SvgPicture.asset('assets/img/mangga.svg', fit: BoxFit.fitWidth);
+                return Image(image: image, fit: BoxFit.fitWidth);
+              }),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),

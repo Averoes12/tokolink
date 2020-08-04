@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tokolink/presentation/widgets/size_config.dart';
 
 class SinglePageOnBoard extends StatelessWidget {
@@ -55,8 +56,8 @@ class SinglePageOnBoard extends StatelessWidget {
   }
 
   Widget ornament(int type) {
-    if (type == 2) return Image.asset('assets/img/ornament_2.png');
-    if (type == 3) return Image.asset('assets/img/ornament_3.png');
-    return Image.asset('assets/img/ornament_1.png');
+    if (type == 2) return SvgPicture.asset('assets/img/ornament_2.svg');
+    if (type == 3) return SvgPicture.asset('assets/img/ornament_3.svg');
+    return SvgPicture.asset('assets/img/ornament_1.svg');
   }
 }

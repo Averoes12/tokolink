@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 
@@ -39,10 +40,10 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         onTap: (pos) => setState(() => navPosition = pos),
         items: [
-          BottomNavigationBarItem(icon: Image.asset('assets/icons/home_1.png'), activeIcon: Image.asset('assets/icons/home.png'), title: Text('Home')),
-          BottomNavigationBarItem(icon: Image.asset('assets/icons/news_1.png'), activeIcon: Image.asset('assets/icons/news.png'), title: Text('News')),
-          BottomNavigationBarItem(icon: Image.asset('assets/icons/order_1.png'), activeIcon: Image.asset('assets/icons/order.png'), title: Text('Order')),
-          BottomNavigationBarItem(icon: Image.asset('assets/icons/account_1.png'), activeIcon: Image.asset('assets/icons/account.png'), title: Text('Account')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home_1.svg'), activeIcon: SvgPicture.asset('assets/icons/home.svg'), title: Text('Home')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/news_1.svg'), activeIcon: SvgPicture.asset('assets/icons/news.svg'), title: Text('News')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/order_1.svg'), activeIcon: SvgPicture.asset('assets/icons/order.svg'), title: Text('Order')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/account_1.svg'), activeIcon: SvgPicture.asset('assets/icons/account.svg'), title: Text('Account')),
         ],
       ),
       body: buildBody(),

@@ -17,7 +17,7 @@ class _OrderSectionState extends State<OrderSection> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(height: size.blockSizeVertical * 6),
-          Text('News', textAlign: TextAlign.center, style: TextStyle(fontSize: 24)),
+          Text('Order', textAlign: TextAlign.center, style: TextStyle(fontSize: 24)),
           SizedBox(height: size.blockSizeVertical * 2),
           Expanded(
             child: SingleChildScrollView(

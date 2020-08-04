@@ -1,13 +1,10 @@
 <svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <style>.a{fill:#c8c8d3;}</style>
-    </defs>
     <g transform="translate(2.5 0)">
-        <path class="a"
+        <path
             d="M15.719,15.4A11.137,11.137,0,0,1,14.25,9.993V6.669A6.508,6.508,0,0,0,7.917,0,6.508,6.508,0,0,0,1.583,6.669V9.988A11.138,11.138,0,0,1,.114,15.4a.872.872,0,0,0-.013.841.786.786,0,0,0,.69.425H15.042a.786.786,0,0,0,.69-.425A.872.872,0,0,0,15.719,15.4Z"
-            transform="translate(0 0)" />
-        <path class="a"
+            fill="#c8c8d3" transform="translate(0 0)" />
+        <path
             d="M3.391,2.282A3.421,3.421,0,0,0,5,0H0A3.6,3.6,0,0,0,1.362,2.137,1.95,1.95,0,0,0,3.391,2.282Z"
-            transform="translate(5.833 17.5)" />
+            fill="#c8c8d3" transform="translate(5.833 17.5)" />
     </g>
 </svg>

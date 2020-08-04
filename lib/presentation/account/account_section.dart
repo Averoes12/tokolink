@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tokolink/presentation/account/profile/profile_edit_screen.dart';
 import 'package:tokolink/presentation/account/widgets/account_menu_widget.dart';
 import 'package:tokolink/presentation/account/widgets/profile_menu_widget.dart';
@@ -48,7 +49,7 @@ class _AccountSectionState extends State<AccountSection> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           AccountMenuWidget(
-                            image: Image.network('https://placehold.it/200'),
+                            image: SvgPicture.asset('assets/icons/manage_toko.svg'),
                             title: 'Manage Toko',
                             subtitle: 'Shop',
                           ),
@@ -56,7 +57,7 @@ class _AccountSectionState extends State<AccountSection> {
                             padding: 20,
                           ),
                           AccountMenuWidget(
-                            image: Image.network('https://placehold.it/200'),
+                            image: SvgPicture.asset('assets/icons/my_address.svg'),
                             title: 'My Address',
                             subtitle: 'Manage delivery address.',
                             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen())),
@@ -65,7 +66,7 @@ class _AccountSectionState extends State<AccountSection> {
                             padding: 20,
                           ),
                           AccountMenuWidget(
-                            image: Image.network('https://placehold.it/200'),
+                            image: SvgPicture.asset('assets/icons/my_product.svg'),
                             title: 'My Product',
                             subtitle: 'Manage products.',
                           ),
@@ -73,7 +74,7 @@ class _AccountSectionState extends State<AccountSection> {
                             padding: 20,
                           ),
                           AccountMenuWidget(
-                            image: Image.network('https://placehold.it/200'),
+                            image: SvgPicture.asset('assets/icons/bantuan.svg'),
                             title: 'Bantuan',
                             subtitle: 'Help',
                           ),
@@ -81,7 +82,7 @@ class _AccountSectionState extends State<AccountSection> {
                             padding: 20,
                           ),
                           AccountMenuWidget(
-                            image: Image.network('https://placehold.it/200'),
+                            image: SvgPicture.asset('assets/icons/term.svg'),
                             title: 'Syarat dan Ketentuan',
                             subtitle: 'Term and services',
                           ),
@@ -89,7 +90,7 @@ class _AccountSectionState extends State<AccountSection> {
                             padding: 20,
                           ),
                           AccountMenuWidget(
-                            image: Image.network('https://placehold.it/200'),
+                            image: SvgPicture.asset('assets/icons/privacy.svg'),
                             title: 'Kebijakan privasi',
                             subtitle: 'Privacy policy',
                           ),
