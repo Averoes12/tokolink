@@ -21,13 +21,18 @@ dependencies:
   pin_code_text_field: ^1.6.0
   carousel_slider: ^2.2.1
   dotted_border: ^1.0.6
-  flutter_svg:
+  flutter_svg: null
+  chopper: ^3.0.6
+  equatable: ^1.2.5
+  shimmer: ^1.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
   pedantic: null
+  chopper_generator: ^3.0.6
+  build_runner: ^1.10.3
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/
-    - assets/img/
+  - assets/icons/
+  - assets/img/
