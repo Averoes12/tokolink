@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
@@ -10,7 +13,7 @@ class OTPScreen extends StatefulWidget {
   final String phone;
 
   const OTPScreen({Key key, @required this.phone}) : super(key: key);
-
+  
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
@@ -19,6 +22,18 @@ class _OTPScreenState extends State<OTPScreen> {
   TextEditingController controller = TextEditingController();
   int pinLength = 4;
   bool hasError = false;
+
+  CountdownTimerController countController;
+  @override
+  void initState() {
+    super.initState();
+    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
+    countController = CountdownTimerController(endTime: endTime, onEnd: onEnd);
+  }
+
+  onEnd() {
+    print('onEnd');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,20 +98,28 @@ class _OTPScreenState extends State<OTPScreen> {
                       textColor: Colors.white,
                       child: Text('Continue'),
                     ),
-                    SizedBox(height: 10),
-                    LabelWidget(
-                      text: 'Request a new verification code in 1:38',
-                      center: true,
-                    )
+                    SizedBox(height: 30),
+                    CountdownTimer(
+                      controller: countController,
+                      widgetBuilder: (_, CurrentRemainingTime time) {
+                        if (time == null) {
+                          return FlatButton(
+                            onPressed: () {},
+                            textColor: ColorConfig.PRIMARY,
+                            child: Text('Resend verification code?'),
+                          );
+                        }
+                        return LabelWidget(
+                          text: 'Request a new verification code in 00:${time.sec} ',
+                          center: true,
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
             ),
-            FlatButton(
-              onPressed: () {},
-              textColor: ColorConfig.PRIMARY,
-              child: Text('Resend verification code?'),
-            ),
+            
           ],
         ),
       ),

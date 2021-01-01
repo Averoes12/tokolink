@@ -3,6 +3,8 @@ import 'package:tokolink/infrastructure/constants/styles.dart';
 import 'package:tokolink/presentation/screens/main_screen.dart';
 import 'package:tokolink/presentation/utils/configs/app_size.dart';
 
+import 'onboarding/onboarding_screen.dart';
+
 class RootScreen extends StatefulWidget {
   @override
   _RootScreenState createState() => _RootScreenState();
@@ -15,7 +17,7 @@ class _RootScreenState extends State<RootScreen> {
       title: 'Tokolink',
       theme: StyleConfig.defaultStyle,
       builder: _materialBuilder,
-      home: MainScreen(),
+      home: OnBoardingScreen(),
     );
   }
 

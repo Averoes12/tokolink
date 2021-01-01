@@ -5,6 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/application/category/category_bloc.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
+import 'package:tokolink/presentation/screens/products/product_screen.dart';
 
 class CategoryWidget extends StatefulWidget {
   @override
@@ -43,7 +44,9 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                           e.image,
                           fit: BoxFit.fill,
                         ),
-                        onTap: null,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen()));
+                        },
                         label: e.name,
                       ),
                     )

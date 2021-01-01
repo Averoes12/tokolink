@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tokolink/presentation/screens/credential/login_screen.dart';
 import 'package:tokolink/presentation/screens/credential/sign_up_screen.dart';
 
 import 'widgets/indicator_widget.dart';
@@ -58,13 +59,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   IndicatorWidget(length: 3, activeIndex: _currentPos),
-                  SizedBox(height: 100),
+                  SizedBox(height: 80),
+                  RaisedButton(
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen())),
+                    textColor: Colors.white,
+                    child: Text('LOGIN'),
+                  ),
+                  SizedBox(height: 20),
                   RaisedButton(
                     onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpScreen())),
                     textColor: Colors.white,
-                    child: Text('Get Started'),
+                    child: Text('DAFTAR'),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 40),
                 ],
               ),
             ),
