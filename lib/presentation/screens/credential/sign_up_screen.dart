@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/infrastructure/constants/global.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'otp_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -19,6 +23,15 @@ class LowerCaseTextFormatter extends TextInputFormatter {
     );
   }
 }
+class CamelTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text[0]?.toUpperCase(),
+      selection: newValue.selection,
+    );
+  }
+}
 class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
   String _username = '';
   String _name = '';
@@ -27,11 +40,32 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
   String _phone = '';
   String _email = '';
   bool _obscureText = true;
-  
-  _toggle() {
+  bool _loading = false;
+  // _toggle() {
+  //   setState(() {
+  //     _obscureText = !_obscureText;
+  //   });
+  // }
+
+  registerUser() async {
     setState(() {
-      _obscureText = !_obscureText;
+      _loading = true;
     });
+    final response = await http.post(GlobalConstant.BASE_URL+'/user/', body: {
+      'username': _username,
+      'name': _name,
+      'phone': _phone,
+      'email': _email,
+      'password': _password,
+      'repassword': _repassword
+    });
+    final data = jsonDecode(response.body);
+    if (response.statusCode == 201) {
+      setState(() {
+        _loading = false;
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phone: _phone)));
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -73,6 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   validator: (v) {
                     if (v.isEmpty) return 'Nama harus diisi';
@@ -141,6 +176,9 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
+                  inputFormatters: [
+                    LowerCaseTextFormatter()
+                  ],
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   validator: (v) {
                     if (v.isEmpty) return 'Email harus diisi';
@@ -155,13 +193,16 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
                 SizedBox(height: 30),
                 RaisedButton(
                   onPressed: () {
-                    if (fk.currentState.validate()) {
-                      save();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phone: _phone)));
+                    if(!_loading){
+                      if (fk.currentState.validate()) {
+                        save();
+                        registerUser();
+                        //Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phone: _phone)));
+                      }
                     }
                   },
                   textColor: Colors.white,
-                  child: Text('Continue'),
+                  child: (_loading) ? Text('Loading ...'): Text('Continue'),
                 ),
               ],
             ),

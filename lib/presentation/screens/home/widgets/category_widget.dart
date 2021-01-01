@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,12 +41,18 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 children: state.payload
                     .map<Widget>(
                       (e) => SingleCategoryWidget(
-                        image: Image.network(
-                          e.image,
-                          fit: BoxFit.fill,
+                        // image: Image.network(
+                        //   e.image,
+                        //   fit: BoxFit.fill,
+                        // ),
+                        image: CachedNetworkImage(
+                            imageUrl: e.image,
+                            progressIndicatorBuilder: (context, url, downloadProgress) => 
+                                    CircularProgressIndicator(value: downloadProgress.progress),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(name: e.name ,idCat : e.idCategory )));
                         },
                         label: e.name,
                       ),

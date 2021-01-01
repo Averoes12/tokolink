@@ -32,8 +32,8 @@ class _RecentProductWidgetState extends State<RecentProductWidget> {
         builder: (context, state) {
           if (state is ProductLoaded) {
             return GridView(
-              padding: EdgeInsets.zero,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1 / 1.6, crossAxisSpacing: 20, mainAxisSpacing: 20),
+              padding: EdgeInsets.only(bottom:30),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1 / 1.8, crossAxisSpacing: 20, mainAxisSpacing: 20),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: state.products
@@ -41,6 +41,8 @@ class _RecentProductWidgetState extends State<RecentProductWidget> {
                     (e) => SingleProductGrid(
                       name: e.name,
                       image: NetworkImage(e.images.first),
+                      price: e.price,
+                      product: e,
                     ),
                   )
                   .toList(),

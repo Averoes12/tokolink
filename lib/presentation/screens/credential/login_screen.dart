@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/infrastructure/constants/global.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main_screen.dart';
+import 'package:http/http.dart' as http;
 import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,11 +28,40 @@ class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
   String _username = '';
   String _password = '';
   bool _obscureText = true;
-  
-  _toggle() {
+  bool _loading = false;
+  void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+  void login(context) async {
+    setState(() {
+      _loading = true;
+    });
+    final response = await http.post(GlobalConstant.BASE_URL+'/user/login', body: {
+      'username': _username,
+      'password': _password,
+    });
+    final data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      setState(() {
+        _loading = false;
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', data['token']).then((value) => {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()))
+      });
+      
+    }else{
+      setState(() {
+        _loading = false;
+      });
+      Scaffold.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red[900],
+        content: Text(data['message']),
+      ));
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -38,68 +71,71 @@ class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
         title: Text(''),
         centerTitle: true,
       ),
-      body: Container(
-        child: Form(
-          key: fk,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(height: 20),
-                Image.asset('assets/img/logo.png'),
-                SizedBox(height: 40),
-                LabelWidget(text: 'Username'),
-                TextFormField(
-                  autofocus: true,
-                  keyboardType: TextInputType.text,
-                  inputFormatters: [
-                    LowerCaseTextFormatter()
-                  ],
-                  style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
-                  validator: (v) {
-                    if (v.isEmpty) return 'Username harus diisi';
-                    return null;
-                  },
-                  onSaved: (v) => setState(() => _username = v),
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan Username Anda',
-                    prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
+      body: Builder(
+        builder: (context) => Container(
+          child: Form(
+            key: fk,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  Image.asset('assets/img/logo.png'),
+                  SizedBox(height: 40),
+                  LabelWidget(text: 'Username'),
+                  TextFormField(
+                    autofocus: true,
+                    keyboardType: TextInputType.text,
+                    inputFormatters: [
+                      LowerCaseTextFormatter()
+                    ],
+                    style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
+                    validator: (v) {
+                      if (v.isEmpty) return 'Username harus diisi';
+                      return null;
+                    },
+                    onSaved: (v) => setState(() => _username = v),
+                    decoration: InputDecoration(
+                      hintText: 'Masukkan Username Anda',
+                      prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                LabelWidget(text: 'Password'),
-                TextFormField(
-                  autofocus: true,
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
-                  obscureText: _obscureText,
-                  validator: (v) {
-                    if (v.isEmpty) return 'Password harus diisi';
-                    return null;
-                  },
-                  onSaved: (v) => setState(() => _password = v),
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan Password Anda',
-                    prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
+                  SizedBox(height: 10),
+                  LabelWidget(text: 'Password'),
+                  TextFormField(
+                    autofocus: true,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
+                    obscureText: _obscureText,
+                    validator: (v) {
+                      if (v.isEmpty) return 'Password harus diisi';
+                      return null;
+                    },
+                    onSaved: (v) => setState(() => _password = v),
+                    decoration: InputDecoration(
+                      hintText: 'Masukkan Password Anda',
+                      prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
+                    ),
                   ),
-                ),
-                SizedBox(height: 30),
-                RaisedButton(
-                  onPressed: () {
-                    if (fk.currentState.validate()) {
-                      save();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
-                    }
-                  },
-                  textColor: Colors.white,
-                  child: Text('Continue'),
-                ),
-              ],
+                  SizedBox(height: 30),
+                  RaisedButton(
+                    onPressed: () {
+                      if (fk.currentState.validate()) {
+                        save();
+                        login(context);
+                        //Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                      }
+                    },
+                    textColor: Colors.white,
+                    child: (_loading) ? Text('Loading...'): Text('Continue'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      )
     );
   }
 }
