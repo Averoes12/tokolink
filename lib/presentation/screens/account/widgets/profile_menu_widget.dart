@@ -12,7 +12,7 @@ class ProfileMenuWidget extends StatefulWidget {
     Key key,
     this.image,
     this.name = 'Username',
-    this.phone = 'No phone',
+    this.phone = 'Edit Profile',
     this.onTap,
   }) : super(key: key);
 

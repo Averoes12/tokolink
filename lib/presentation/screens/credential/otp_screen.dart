@@ -27,18 +27,19 @@ class _OTPScreenState extends State<OTPScreen> {
   int pinLength = 4;
   bool hasError = false;
   bool _loading = false;
+  int endTime;
   CountdownTimerController countController;
   @override
   void initState() {
     super.initState();
-    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
+    endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
     countController = CountdownTimerController(endTime: endTime, onEnd: onEnd);
   }
 
-  onEnd() {
+  void onEnd() {
     print('onEnd');
   }
-  verify(context) async {
+  void verify(context) async {
     setState(() {
       _loading = true;
     });
@@ -51,7 +52,7 @@ class _OTPScreenState extends State<OTPScreen> {
       setState(() {
         _loading = false;
       });
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
     }else{
       setState(() {
         _loading = false;

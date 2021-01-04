@@ -1,5 +1,7 @@
+import 'package:tokolink/model/address.dart';
+
 class Transaction {
-  String address;
+  Address address;
   String coupon;
   String courier;
   String createdAt;
@@ -10,7 +12,10 @@ class Transaction {
   String status;
   String subtotal;
   String total;
+  String invoice;
   String user;
+  String store;
+  List<DetailTransaction> detail;
 
   Transaction({
     this.address,
@@ -24,12 +29,15 @@ class Transaction {
     this.status,
     this.subtotal,
     this.total,
+    this.invoice,
     this.user,
+    this.detail,
+    this.store,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
-      address: json['address'],
+      address: Address.fromJson(json['address']),
       coupon: json['coupon'],
       courier: json['courier'],
       createdAt: json['created_at'],
@@ -41,12 +49,16 @@ class Transaction {
       subtotal: json['subtotal'],
       total: json['total'],
       user: json['user'],
+      store: json['store'],
+      invoice: json['invoice'],
+      detail: List<DetailTransaction>.from(
+        json['detail'].map((x) => DetailTransaction.fromJson(x)))
     );
   }
 
   Map<String, dynamic> toJson() {
     var data = <String, dynamic>{};
-    data['address'] = address;
+    data['address'] = address.toJson();
     data['coupon'] = coupon;
     data['courier'] = courier;
     data['created_at'] = createdAt;
@@ -58,6 +70,32 @@ class Transaction {
     data['subtotal'] = subtotal;
     data['total'] = total;
     data['user'] = user;
+    data['store'] = store;
+    data['detail'] = detail.map((v) => v.toJson()).toList();
     return data;
   }
+}
+class DetailTransaction {
+  final String product;
+  final String qty;
+  final String price;
+
+  DetailTransaction(
+      {this.product,
+      this.qty,
+      this.price,
+      });
+
+  factory DetailTransaction.fromJson(Map<String, dynamic> json) {
+    return DetailTransaction(
+      product: json['product'],
+      qty: json['qty'],
+      price: json['price'],
+    );
+  }
+  Map<String, dynamic> toJson() => {
+    'product': product,
+    'qty': qty,
+    'price': price,
+  };
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
-import 'package:tokolink/presentation/screens/main_screen.dart';
 import 'package:tokolink/presentation/utils/configs/app_size.dart';
 
 import 'onboarding/onboarding_screen.dart';
@@ -12,17 +11,23 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
-  getToken() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
-  }
-
+  
+  SharedPreferences prefs ;
+  bool isLogin = false;
   @override
   void initState() {
-    getToken();
+    _goHome();
     super.initState();
   }
 
+  void _goHome() async{
+    prefs = await SharedPreferences.getInstance();
+    if(prefs.getString('token') != null){
+      setState(() {
+        isLogin = true;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

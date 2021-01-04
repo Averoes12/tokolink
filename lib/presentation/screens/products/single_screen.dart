@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,12 +7,13 @@ import 'package:flutter_html/style.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
-import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/model/cart.dart';
 import 'package:tokolink/model/product.dart';
+import 'package:tokolink/presentation/screens/checkout/checkout_screen.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
+
 class SingleScreen extends StatefulWidget {
   final Product product;
   const SingleScreen({Key key,this.product}) : super(key: key);
@@ -23,35 +22,29 @@ class SingleScreen extends StatefulWidget {
 }
 
 class _SingleScreenState extends State<SingleScreen> with HasSizeMixin {
-  final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
-  bool _loading = false;
-  var _product;
-  List<dynamic> _subCategory;
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
+  final bool _loading = false;
+  //var _product;
+  //List<dynamic> _subCategory;
+  int qty = 1;
+  int subtotal = 0;
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final cart = Cart();
   @override
   void initState() {
-    super.initState();
-  }
-  void getSingle() async {
     setState(() {
-      _loading = true;
+      subtotal = qty * int.parse(widget.product.price);
+      Cart().remove();
     });
-    final response = await http.get(GlobalConstant.BASE_URL+'/Single/cat/');
-    final data = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      setState(() {
-        _loading = false;
-        _product = data['data'];
-      });
-    }else{
-      setState(() {
-        _loading = false;
-      });
-    }
+    
+    super.initState();
   }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Detail Product'),
@@ -152,23 +145,105 @@ class _SingleScreenState extends State<SingleScreen> with HasSizeMixin {
       bottomNavigationBar: Stack(
           children: [
             Container(
-              height: 100.0,
+              height: 120.0,
               padding: EdgeInsets.only(left:20, right:20),
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if(qty > 1){
+                                qty -= 1;
+                                subtotal = qty * int.parse(widget.product.price);
+                              }
+                            });
+                          },
+                          child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/img/minus.svg',
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          qty.toString(),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              qty += 1;
+                              subtotal = qty * int.parse(widget.product.price);
+                            });
+                          },
+                          child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/img/plus.svg',
+                                ),
+                              )),
+                        ),
+                        
+                      ],
+                    ),
+                    Text(formatCurrency.format(subtotal),style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorConfig.PRIMARY))
+                  ]),
+                  SizedBox(height: 10),
                   RaisedButton(
-                    onPressed: () => null,
+                    onPressed: () => {
+                      addToCart()
+                    },
                     textColor: Colors.white,
                     child: Text('Belanja Sekarang'),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
           ],
         ),
     );
+  }
+
+  void addToCart(){
+    int ind;
+    ind = Cart().cart.cartItem.indexWhere((element) => element.productId == widget.product.idProduct);
+    print(qty);
+    if(ind != -1){
+      Cart().addToCart(widget.product, Cart().cart.cartItem[ind].quantity + qty);
+    }else{
+      final snackBar = SnackBar(content: Text('Product has been added to cart'));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+      Cart().addToCart(widget.product, qty);
+    }
+    
+    final snackBar = SnackBar(content: Text('Product has been added to cart'));
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckoutSection() ));
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/presentation/screens/credential/login_screen.dart';
 import 'package:tokolink/presentation/screens/credential/sign_up_screen.dart';
+import 'package:tokolink/presentation/screens/main_screen.dart';
 
 import 'widgets/indicator_widget.dart';
 import 'widgets/single_page_onboard.dart';
@@ -14,15 +16,23 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final _pageController = PageController(initialPage: 0);
   int _currentPos;
+  SharedPreferences prefs ;
 
   @override
   void initState() {
     _currentPos = 0;
     super.initState();
   }
-
+  void _goHome() async{
+    prefs = await SharedPreferences.getInstance();
+    if(prefs.getString('token') != null){
+      await Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => MainScreen()));
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    _goHome();
     return Scaffold(
       body: Container(
         child: Column(

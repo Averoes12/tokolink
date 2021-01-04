@@ -9,7 +9,6 @@ import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main_screen.dart';
 import 'package:http/http.dart' as http;
-import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -27,13 +26,14 @@ class LowerCaseTextFormatter extends TextInputFormatter {
 class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
   String _username = '';
   String _password = '';
-  bool _obscureText = true;
+  final bool _obscureText = true;
   bool _loading = false;
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+  SharedPreferences prefs;
+  // void _toggle() {
+  //   setState(() {
+  //     _obscureText = !_obscureText;
+  //   });
+  // }
   void login(context) async {
     setState(() {
       _loading = true;
@@ -47,8 +47,12 @@ class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
       setState(() {
         _loading = false;
       });
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('token', data['token']).then((value) => {
+      prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', data['data']['token']).then((value) => {
+        prefs.setString('name', data['data']['name']),
+        if(data['data']['storeToken'] != null){
+          prefs.setString('storeToken', data['data']['storeToken'])
+        },
         Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()))
       });
       

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 
 import 'account/account_section.dart';
@@ -20,11 +21,14 @@ class _MainScreenState extends State<MainScreen> {
   // States
   bool keyboardOpen = false;
   int navPosition = NavigationPos.HOME.index;
+  SharedPreferences prefs;
+  bool isStore = false;
 
   @override
   void initState() {
     super.initState();
     keyboardVisibilityListener();
+    _goHome();
   }
 
   @override
@@ -40,10 +44,10 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         onTap: (pos) => setState(() => navPosition = pos),
         items: [
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home_1.svg'), activeIcon: SvgPicture.asset('assets/icons/home.svg'), title: Text('Home')),
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/news_1.svg'), activeIcon: SvgPicture.asset('assets/icons/news.svg'), title: Text('News')),
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/order_1.svg'), activeIcon: SvgPicture.asset('assets/icons/order.svg'), title: Text('Order')),
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/account_1.svg'), activeIcon: SvgPicture.asset('assets/icons/account.svg'), title: Text('Account')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home_1.svg'), activeIcon: SvgPicture.asset('assets/icons/home.svg'), label: 'Home'),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/news_1.svg'), activeIcon: SvgPicture.asset('assets/icons/news.svg'), label: 'News'),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/order_1.svg'), activeIcon: SvgPicture.asset('assets/icons/order.svg'), label: 'Order'),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/account_1.svg'), activeIcon: SvgPicture.asset('assets/icons/account.svg'), label: 'Account'),
         ],
       ),
       body: buildBody(),
@@ -51,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget buildFAB() {
-    if (keyboardOpen) return SizedBox();
+    if (!isStore) return SizedBox();
     return FloatingActionButton(
       elevation: 0,
       backgroundColor: ColorConfig.N1,
@@ -68,7 +72,14 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
+  void _goHome() async{
+    prefs = await SharedPreferences.getInstance();
+    if(prefs.getString('storeToken') != null){
+      setState(() {
+        isStore = true;
+      });
+    }
+  }
   void keyboardVisibilityListener() {
     KeyboardVisibilityNotification().addNewListener(
       onChange: (bool visible) {

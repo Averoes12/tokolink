@@ -7,7 +7,7 @@ class AccountMenuWidget extends StatefulWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-
+  
   const AccountMenuWidget({
     Key key,
     this.image,

@@ -6,9 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
-import 'package:tokolink/infrastructure/constants/styles.dart';
 import 'package:tokolink/model/product.dart';
-import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/screens/widgets/single_product_grid.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
 import 'package:http/http.dart' as http;
@@ -137,7 +135,7 @@ class _ProductScreenState extends State<ProductScreen> with HasSizeMixin {
   }
 
 
-  _cate(cat){
+  Widget _cate(cat){
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: ColorConfig.PRIMARY)

@@ -3,6 +3,7 @@ class Product {
   String createdAt;
   String description;
   String idProduct;
+  String store;
   List<String> images;
   String name;
   String price;
@@ -19,6 +20,7 @@ class Product {
     this.price,
     this.review,
     this.weight,
+    this.store,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class Product {
       price: json['price'],
       review: json['review'],
       weight: json['weight'],
+      store: json['store'],
     );
   }
 
@@ -45,6 +48,7 @@ class Product {
     data['price'] = price;
     data['review'] = review;
     data['weight'] = weight;
+    data['store'] = store;
     if (images != null) {
       data['images'] = images;
     }

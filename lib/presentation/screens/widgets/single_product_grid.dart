@@ -29,7 +29,7 @@ class SingleProductGrid extends StatefulWidget {
 }
 
 class _SingleProductGridState extends State<SingleProductGrid> with HasSizeMixin {
-  final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
@@ -7,7 +5,6 @@ import 'package:tokolink/infrastructure/constants/global.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'otp_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -39,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
   String _repassword = '';
   String _phone = '';
   String _email = '';
-  bool _obscureText = true;
+  final bool _obscureText = true;
   bool _loading = false;
   // _toggle() {
   //   setState(() {
@@ -47,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
   //   });
   // }
 
-  registerUser() async {
+  void registerUser() async {
     setState(() {
       _loading = true;
     });
@@ -59,12 +56,12 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
       'password': _password,
       'repassword': _repassword
     });
-    final data = jsonDecode(response.body);
+    //final data = jsonDecode(response.body);
     if (response.statusCode == 201) {
       setState(() {
         _loading = false;
       });
-      Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phone: _phone)));
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phone: _phone)));
     }
   }
   @override
