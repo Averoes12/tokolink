@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokolink/presentation/screens/account/profile/toko_edit_screen.dart';
+import 'package:tokolink/presentation/screens/manageproduct/manage_product_screen.dart';
 import 'package:tokolink/presentation/screens/order/order_store_screen.dart';
 import 'package:tokolink/presentation/screens/page/page_screen.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
@@ -79,7 +81,7 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                       ),
                       borderRadius: BorderRadius.circular(300),
                     ),
-                    onTap: () => null,
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TokoEditScreen())),
                   ) : Container(),
                   SizedBox(height: 20),
                   Card(
@@ -100,6 +102,7 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                             image: SvgPicture.asset('assets/icons/my_product.svg'),
                             title: 'My Product',
                             subtitle: 'Manage products.',
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageProductScreen())),
                           ) : Container(),
                           (isStore) ? DashedDivider(
                             padding: 20,
