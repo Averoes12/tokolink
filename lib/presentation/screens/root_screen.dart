@@ -1,33 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
+import 'package:tokolink/localization/demo_localization.dart';
+import 'package:tokolink/localization/localization_const.dart';
+import 'package:tokolink/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:tokolink/presentation/utils/configs/app_size.dart';
 
-import 'onboarding/onboarding_screen.dart';
-
 class RootScreen extends StatefulWidget {
+  const RootScreen({Key key}) : super(key: key);
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    var state = context.findAncestorStateOfType<_RootScreenState>();
+    state.setLocale(newLocale);
+    print('Set New Local => ${newLocale}');
+  }
+
   @override
   _RootScreenState createState() => _RootScreenState();
 }
 
 class _RootScreenState extends State<RootScreen> {
-  
-  SharedPreferences prefs ;
+  SharedPreferences prefs;
   bool isLogin = false;
+  Locale _locale;
   @override
   void initState() {
     _goHome();
     super.initState();
   }
 
-  void _goHome() async{
+  void _goHome() async {
     prefs = await SharedPreferences.getInstance();
-    if(prefs.getString('token') != null){
+    if (prefs.getString('token') != null) {
       setState(() {
         isLogin = true;
       });
     }
   }
+
+  setLocale(Locale locale){
+    setState(() {
+      _locale = locale;
+    });
+    print('SET LOCALE => $_locale');
+    return _locale;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('enter didChangeDependencies');
+    getLocale().then((locale){
+      setState(() {
+        _locale = locale;
+      });
+      print('Get Locale => $_locale');
+      return _locale;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,6 +67,26 @@ class _RootScreenState extends State<RootScreen> {
       theme: StyleConfig.defaultStyle,
       builder: _materialBuilder,
       home: OnBoardingScreen(),
+      supportedLocales: [
+        Locale('id', 'ID'),
+        Locale('en', 'US')
+      ],
+      localizationsDelegates: [
+        DemoLocalization.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        for(var supportedLocale in supportedLocales) {
+          if(supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            print('SupportedLocale => ${supportedLocale.languageCode}');
+            return supportedLocale;
+          }
+        }
+        return supportedLocales.first;
+      },
     );
   }
 
@@ -46,10 +98,14 @@ class _RootScreenState extends State<RootScreen> {
             final _screenHeight = _mediaQueryData.size.height;
             final _blockSizeHorizontal = _screenWidth / 100;
             final _blockSizeVertical = _screenHeight / 100;
-            final _safeAreaHorizontal = _mediaQueryData.padding.left + _mediaQueryData.padding.right;
-            final _safeAreaVertical = _mediaQueryData.padding.top + _mediaQueryData.padding.bottom;
-            final _safeBlockHorizontal = (_screenWidth - _safeAreaHorizontal) / 100;
-            final _safeBlockVertical = (_screenHeight - _safeAreaVertical) / 100;
+            final _safeAreaHorizontal =
+                _mediaQueryData.padding.left + _mediaQueryData.padding.right;
+            final _safeAreaVertical =
+                _mediaQueryData.padding.top + _mediaQueryData.padding.bottom;
+            final _safeBlockHorizontal =
+                (_screenWidth - _safeAreaHorizontal) / 100;
+            final _safeBlockVertical =
+                (_screenHeight - _safeAreaVertical) / 100;
 
             return AppSize(
               child: widget,
