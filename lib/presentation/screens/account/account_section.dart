@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/localization/languages.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/account/profile/toko_edit_screen.dart';
 import 'package:tokolink/presentation/screens/manageproduct/manage_product_screen.dart';
 import 'package:tokolink/presentation/screens/order/order_store_screen.dart';
@@ -9,6 +12,7 @@ import 'package:tokolink/presentation/screens/page/page_screen.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
 
+import '../root_screen.dart';
 import 'address/address_screen.dart';
 import 'profile/profile_edit_screen.dart';
 import 'widgets/account_menu_widget.dart';
@@ -43,6 +47,28 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
     prefs = await SharedPreferences.getInstance();
     _name = prefs.getString('name');
   }
+
+  void _changeLanguage(Language language) async {
+    var _locale = await setLocale(language.languageCode);
+    RootScreen.setLocale(context, _locale);
+  }
+
+  var langName;
+  @override
+  void didChangeDependencies() {
+    getLocale().then((value){
+      setState(() {
+        if(value.languageCode.contains('id')){
+          langName = 'Indonesia';
+        }else if(value.languageCode.contains('en')){
+          langName = 'English';
+        }else {
+          langName = 'Indonesia';
+        }
+      });
+    });
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,6 +87,7 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                   SizedBox(height: 10),
                   ProfileMenuWidget(
                     name: _name,
+                    phone: getTranslated(context, 'edit_profile'),
                     image: ClipRRect(
                       child: Image.network(
                         'https://placehold.it/300',
@@ -73,7 +100,7 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                   SizedBox(height: 10),
                   (isStore) ? ProfileMenuWidget(
                     name: 'tokolink',
-                    phone: 'Edit Toko',
+                    phone: getTranslated(context, 'edit_merchant'),
                     image: ClipRRect(
                       child: Image.asset(
                         'assets/img/logo-mark.png',
@@ -91,8 +118,8 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                         children: <Widget>[
                           (isStore) ? AccountMenuWidget(
                             image: SvgPicture.asset('assets/icons/manage_toko.svg'),
-                            title: 'Manage Pesanan',
-                            subtitle: 'Shop',
+                            title: getTranslated(context, 'manage_orders'),
+                            subtitle: getTranslated(context, 'shop'),
                             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => OrderStoreScreen())),
                           ) : Container(),
                           (isStore) ? DashedDivider(
@@ -100,8 +127,8 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                           ) : Container(),
                           (isStore) ? AccountMenuWidget(
                             image: SvgPicture.asset('assets/icons/my_product.svg'),
-                            title: 'My Product',
-                            subtitle: 'Manage products.',
+                            title: getTranslated(context, 'my_product'),
+                            subtitle: getTranslated(context, 'manage_product'),
                             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageProductScreen())),
                           ) : Container(),
                           (isStore) ? DashedDivider(
@@ -109,36 +136,50 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
                           ) : Container(),
                           AccountMenuWidget(
                             image: SvgPicture.asset('assets/icons/my_address.svg'),
-                            title: 'My Address',
-                            subtitle: 'Manage delivery address.',
+                            title: getTranslated(context, 'my_address'),
+                            subtitle: getTranslated(context, 'manage_address'),
                             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen(isedit:true))),
                           ),
                           DashedDivider(
                             padding: 20,
                           ),
                           AccountMenuWidget(
+                              image: Icon(Icons.language, color: ColorConfig.N4,size: 40,),
+                              title: getTranslated(context, 'select_language'),
+                              subtitle: langName,
+                              onTap: (){
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => _languageSelect(context, Language.languageList())
+                                ).then((value) => _changeLanguage(value));
+                              }
+                          ),
+                          DashedDivider(
+                            padding: 20,
+                          ),
+                          AccountMenuWidget(
                             image: SvgPicture.asset('assets/icons/bantuan.svg'),
-                            title: 'Bantuan',
-                            subtitle: 'Help',
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PageScreen(title: 'Bantuan',id:4)))
+                            title: getTranslated(context, 'help'),
+                            subtitle: getTranslated(context, 'help'),
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PageScreen(title: getTranslated(context, 'help'),id:4)))
                           ),
                           DashedDivider(
                             padding: 20,
                           ),
                           AccountMenuWidget(
                             image: SvgPicture.asset('assets/icons/term.svg'),
-                            title: 'Syarat dan Ketentuan',
-                            subtitle: 'Term and services',
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PageScreen(title: 'Syarat dan Ketentuan',id:1)))
+                            title: getTranslated(context, 'term_n_services'),
+                            subtitle: getTranslated(context, 'term_n_services'),
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PageScreen(title: getTranslated(context, 'term_n_services'),id:1)))
                           ),
                           DashedDivider(
                             padding: 20,
                           ),
                           AccountMenuWidget(
                             image: SvgPicture.asset('assets/icons/privacy.svg'),
-                            title: 'Kebijakan privasi',
-                            subtitle: 'Privacy policy',
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PageScreen(title: 'Kebijakan privasi',id:2)))
+                            title: getTranslated(context, 'privacy_policy'),
+                            subtitle: getTranslated(context, 'privacy_policy'),
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PageScreen(title: getTranslated(context, 'privacy_policy'),id:2)))
                           ),
                         ],
                       ),
@@ -152,4 +193,19 @@ class _AccountSectionState extends State<AccountSection> with HasSizeMixin {
       ),
     );
   }
+}
+
+Widget _languageSelect(context, List<Language> language){
+  return Container(
+    child: Wrap(
+        children: language.map((e) =>
+            ListTile(
+              title: Text(e.name),
+              onTap: (){
+                Navigator.pop(context, e);
+              },
+            )
+        ).toList()
+    ),
+  );
 }

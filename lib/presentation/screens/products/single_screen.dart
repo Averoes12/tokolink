@@ -7,6 +7,7 @@ import 'package:flutter_html/style.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/cart.dart';
 import 'package:tokolink/model/product.dart';
 import 'package:tokolink/presentation/screens/checkout/checkout_screen.dart';
@@ -47,7 +48,7 @@ class _SingleScreenState extends State<SingleScreen> with HasSizeMixin {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Detail Product'),
+        title: Text(getTranslated(context, 'detail_product')),
         centerTitle: true,
       ),
       body: Container(
@@ -122,7 +123,7 @@ class _SingleScreenState extends State<SingleScreen> with HasSizeMixin {
                     DashedDivider(),
                     SizedBox(height: 30),
                     Text(
-                      'Description',
+                      getTranslated(context, 'desc_product'),
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold
                     )),
                     SizedBox(height: 10),
@@ -219,7 +220,7 @@ class _SingleScreenState extends State<SingleScreen> with HasSizeMixin {
                       addToCart()
                     },
                     textColor: Colors.white,
-                    child: Text('Belanja Sekarang'),
+                    child: Text(getTranslated(context, 'btn_shop')),
                   ),
                   SizedBox(height: 20),
                 ],
@@ -237,12 +238,12 @@ class _SingleScreenState extends State<SingleScreen> with HasSizeMixin {
     if(ind != -1){
       Cart().addToCart(widget.product, Cart().cart.cartItem[ind].quantity + qty);
     }else{
-      final snackBar = SnackBar(content: Text('Product has been added to cart'));
+      final snackBar = SnackBar(content: Text(getTranslated(context, 'product_add_to_cart')));
       _scaffoldKey.currentState.showSnackBar(snackBar);
       Cart().addToCart(widget.product, qty);
     }
     
-    final snackBar = SnackBar(content: Text('Product has been added to cart'));
+    final snackBar = SnackBar(content: Text(getTranslated(context, 'product_add_to_cart')));
     _scaffoldKey.currentState.showSnackBar(snackBar);
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckoutSection() ));
   }

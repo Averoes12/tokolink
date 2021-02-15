@@ -9,6 +9,7 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/main_screen.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:http/http.dart' as http;
@@ -68,7 +69,7 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verification'),
+        title: Text(getTranslated(context, 'otp_verification')),
         centerTitle: true,
       ),
       body: Builder(
@@ -82,7 +83,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       SizedBox(height: 20),
-                      LabelWidget(text: 'Enter the verification code sent via'),
+                      LabelWidget(text: getTranslated(context, 'enter_verification_code')),
                       LabelWidget(text: '(+62) ${widget.phone}', primary: true),
                       SizedBox(height: 20),
                       Align(
@@ -127,7 +128,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
                         },
                         textColor: Colors.white,
-                        child: (_loading) ? Text('Loading...'): Text('Continue'),
+                        child: (_loading) ? Text(getTranslated(context, 'loading')): Text(getTranslated(context, 'btn_continue')),
                       ),
                       SizedBox(height: 30),
                       CountdownTimer(
@@ -137,11 +138,11 @@ class _OTPScreenState extends State<OTPScreen> {
                             return FlatButton(
                               onPressed: () {},
                               textColor: ColorConfig.PRIMARY,
-                              child: Text('Resend verification code?'),
+                              child: Text('${getTranslated(context, 'resend_verification')}?'),
                             );
                           }
                           return LabelWidget(
-                            text: 'Request a new verification code in 00:${time.sec} ',
+                            text: '${getTranslated(context, 'request_verification')} 00:${time.sec} ',
                             center: true,
                           );
                         },

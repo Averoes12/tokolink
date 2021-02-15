@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/application/category/category_bloc.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/styles.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/products/product_screen.dart';
 
 class CategoryWidget extends StatefulWidget {
@@ -27,6 +28,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     _bloc.close();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(name: e.name ,idCat : e.idCategory )));
                         },
-                        label: e.name,
+                        label: translateCategory(context, e.name),
                       ),
                     )
                     .toList(),

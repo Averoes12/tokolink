@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
 
@@ -30,7 +31,7 @@ class _HomeSectionState extends State<HomeSection> with HasSizeMixin {
             SizedBox(height: 20),
             CategoryWidget(),
             SizedBox(height: 20),
-            LabelWidget(text: 'Produk Terbaru', bigger: true),
+            LabelWidget(text: getTranslated(context, 'latest_product'), bigger: true),
             SizedBox(height: 10),
             RecentProductWidget(),
           ],

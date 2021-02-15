@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/localization/localization_const.dart';
 
 import 'account/account_section.dart';
 import 'home/home_section.dart';
@@ -44,10 +45,10 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         onTap: (pos) => setState(() => navPosition = pos),
         items: [
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home_1.svg'), activeIcon: SvgPicture.asset('assets/icons/home.svg'), label: 'Home'),
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/news_1.svg'), activeIcon: SvgPicture.asset('assets/icons/news.svg'), label: 'News'),
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/order_1.svg'), activeIcon: SvgPicture.asset('assets/icons/order.svg'), label: 'Order'),
-          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/account_1.svg'), activeIcon: SvgPicture.asset('assets/icons/account.svg'), label: 'Account'),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home_1.svg'), activeIcon: SvgPicture.asset('assets/icons/home.svg'), label: getTranslated(context, 'home')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/news_1.svg'), activeIcon: SvgPicture.asset('assets/icons/news.svg'), label: getTranslated(context, 'news')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/order_1.svg'), activeIcon: SvgPicture.asset('assets/icons/order.svg'), label: getTranslated(context, 'order')),
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/account_1.svg'), activeIcon: SvgPicture.asset('assets/icons/account.svg'), label: getTranslated(context, 'account')),
         ],
       ),
       body: buildBody(),

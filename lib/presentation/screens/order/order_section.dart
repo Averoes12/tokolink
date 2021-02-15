@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/transaction.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
 import 'package:http/http.dart' as http;
@@ -74,7 +75,7 @@ class _OrderSectionState extends State<OrderSection> with HasSizeMixin {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(height: appSize.blockSizeVertical * 6),
-            Text('Order', textAlign: TextAlign.center, style: TextStyle(fontSize: 24)),
+            Text(getTranslated(context, 'order'), textAlign: TextAlign.center, style: TextStyle(fontSize: 24)),
             SizedBox(height: 0),
             Expanded(
               child: SingleChildScrollView(

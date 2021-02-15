@@ -17,12 +17,21 @@ class SearchAndNotificationWidget extends StatefulWidget {
 
 class _SearchAndNotificationWidgetState extends State<SearchAndNotificationWidget> {
 
+  var langCode;
   void _changeLanguage(Language language) async {
     var _locale = await setLocale(language.languageCode);
     RootScreen.setLocale(context, _locale);
-    print('Lang => ${language.languageCode}');
   }
 
+  @override
+  void didChangeDependencies() {
+    getLocale().then((value){
+      setState(() {
+        langCode = value.languageCode.toUpperCase();
+      });
+    });
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,21 +46,21 @@ class _SearchAndNotificationWidgetState extends State<SearchAndNotificationWidge
               ),
             ),
           ),
-          DropdownButtonHideUnderline(
-            child: DropdownButton(
-              onChanged: (Language language) {
-                print('Language => ${language.languageCode}');
-                _changeLanguage(language);
-              },
-              underline: SizedBox(),
-              icon: Icon(Icons.language),
-              items: Language.languageList()
-                .map<DropdownMenuItem<Language>>((e) => DropdownMenuItem<Language>(
-                    value: e,
-                    child: Text(e.name)
-                )
-              ).toList(),
-            ),
+          Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children: [
+              IconButton(
+                  icon: Icon(Icons.language),
+                  color: ColorConfig.N4,
+                  onPressed: (){
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) => _languageSelect(context, Language.languageList())
+                    ).then((value) => _changeLanguage(value));
+                  }
+              ),
+              Text(langCode)
+            ],
           ),
           IconButton(
             onPressed: () {
@@ -67,4 +76,20 @@ class _SearchAndNotificationWidgetState extends State<SearchAndNotificationWidge
       ),
     );
   }
+}
+
+Widget _languageSelect(context, List<Language> language){
+        return Container(
+          child: Wrap(
+            children:
+            language.map((e) =>
+              ListTile(
+                title: Text(e.name),
+                onTap: (){
+                  Navigator.pop(context, e);
+                },
+              )
+            ).toList()
+          ),
+        );
 }

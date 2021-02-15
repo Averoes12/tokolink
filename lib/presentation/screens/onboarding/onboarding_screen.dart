@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/credential/login_screen.dart';
 import 'package:tokolink/presentation/screens/credential/sign_up_screen.dart';
 import 'package:tokolink/presentation/screens/main_screen.dart';
@@ -44,20 +45,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 onPageChanged: (pos) => setState(() => _currentPos = pos),
                 children: <Widget>[
                   SinglePageOnBoard(
-                    title: 'Order fast',
-                    description: 'Choosing fresh and delicious food right at home, simply select and order.',
+                    title: getTranslated(context, 'title_on_board_1'),
+                    description: getTranslated(context, 'desc_on_board_1'),
                     image: SvgPicture.asset('assets/img/1.svg'),
                   ),
                   SinglePageOnBoard(
                     type: 2,
-                    title: 'Fast shipping',
-                    description: 'Fast delivery is now simple and fast. Orders will be shipped quickly to you.',
+                    title: getTranslated(context, 'title_on_board_2'),
+                    description: getTranslated(context, 'desc_on_board_2'),
                     image: SvgPicture.asset('assets/img/2.svg'),
                   ),
                   SinglePageOnBoard(
                     type: 3,
-                    title: 'Reflect and evaluate',
-                    description: 'The enthusiasm to contribute ideas for customers, helping the service more and more developed.',
+                    title: getTranslated(context, 'title_on_board_3'),
+                    description: getTranslated(context, 'desc_on_board_3'),
                     image: SvgPicture.asset('assets/img/3.svg'),
                   ),
                 ],
@@ -73,13 +74,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   RaisedButton(
                     onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen())),
                     textColor: Colors.white,
-                    child: Text('LOGIN'),
+                    child: Text(getTranslated(context, 'login')),
                   ),
                   SizedBox(height: 20),
                   RaisedButton(
                     onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpScreen())),
                     textColor: Colors.white,
-                    child: Text('DAFTAR'),
+                    child: Text(getTranslated(context, 'register')),
                   ),
                   SizedBox(height: 40),
                 ],

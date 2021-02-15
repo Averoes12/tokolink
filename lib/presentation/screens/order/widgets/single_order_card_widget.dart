@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/transaction.dart';
 import 'package:tokolink/presentation/screens/order/order_detail.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
 
-class SingleOrderCardWidget extends StatelessWidget {
+class SingleOrderCardWidget extends StatefulWidget {
   final bool merchant;
   final String orderId;
   final String dateTime;
@@ -24,21 +25,29 @@ class SingleOrderCardWidget extends StatelessWidget {
     this.total = 100000,
   }) : super(key: key);
 
+  @override
+  _SingleOrderCardWidgetState createState() => _SingleOrderCardWidgetState();
+}
+
+class _SingleOrderCardWidgetState extends State<SingleOrderCardWidget> {
   void updateStatus(status,id){
-    
+
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
     DateFormat formatter = DateFormat('E, d MMM y H:m');
-    String formatted = formatter.format(DateTime.parse(data.createdAt));
+    String formatted = formatter.format(DateTime.parse(widget.data.createdAt));
     var detail = [];
-    for (var item in data.detail) {
+    for (var item in widget.data.detail) {
       detail.add(item.product);
     }
     return  GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetailSection(transaction: data)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetailSection(transaction: widget.data)));
       },
       child:Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -65,7 +74,7 @@ class SingleOrderCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                    data.store,
+                    widget.data.store,
                     style: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                   SizedBox(height: 10),
@@ -74,17 +83,17 @@ class SingleOrderCardWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Order #'+data.idTransaction, style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text('${getTranslated(context, 'order')} #'+widget.data.idTransaction, style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(formatted, style: TextStyle(color: Colors.grey)),
                     ],
                   ),
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[
-                      Text('Status : ', style: TextStyle(color: Colors.grey)),
+                      Text('${getTranslated(context, 'order_status')} : ', style: TextStyle(color: Colors.grey)),
                       Text(
-                        data.status,
-                        style: TextStyle(color: status == 'Ordered' ? ColorConfig.PRIMARY : ColorConfig.N2),
+                        translateStatus(context,widget.data.status),
+                        style: TextStyle(color: widget.status == 'Ordered' ? ColorConfig.PRIMARY : ColorConfig.N2),
                       ),
                     ],
                   ),
@@ -122,9 +131,9 @@ class SingleOrderCardWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('Total:'),
+                          Text('${getTranslated(context, 'order_total')}:'),
                           Text(
-                            formatCurrency.format( int.parse(data.total)),
+                            formatCurrency.format( int.parse(widget.data.total)),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -134,7 +143,7 @@ class SingleOrderCardWidget extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 10),
-                      (merchant) ? confirmation() : Container(),
+                      (widget.merchant) ? confirmation() : Container(),
                       SizedBox(height: 10)
                     ],
                   ),
@@ -146,12 +155,13 @@ class SingleOrderCardWidget extends StatelessWidget {
       )
     );
   }
+
   Widget confirmation(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         OutlineButton(
-          child: Text('Tolak Pesanan', style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
+          child: Text(getTranslated(context, 'btn_deny_order'), style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
           onPressed: (){
               // FlutterClipboard.copy(widget.data['amount'].toString()).then(( value ) async {
               //   final snackBar = SnackBar(content: Text('Jumlah pembayaran berhasil disalin'));
@@ -164,7 +174,7 @@ class SingleOrderCardWidget extends StatelessWidget {
         ),
         SizedBox(width: 10),
         OutlineButton(
-          child: Text('Terima Pesanan', style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
+          child: Text(getTranslated(context, 'btn_conf_order'), style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
           onPressed: (){
               // FlutterClipboard.copy(widget.data['amount'].toString()).then(( value ) async {
               //   final snackBar = SnackBar(content: Text('Jumlah pembayaran berhasil disalin'));

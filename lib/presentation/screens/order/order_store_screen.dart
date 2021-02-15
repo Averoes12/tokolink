@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
 import 'package:http/http.dart' as http;
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/transaction.dart';
 import 'package:tokolink/presentation/screens/order/widgets/single_order_card_widget.dart';
 class OrderStoreScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _OrderStoreScreenState extends State<OrderStoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manage Pesanan'),
+        title: Text(getTranslated(context, 'manage_orders')),
         centerTitle: true,
       ),
       body: (loading) ? Center(child:CircularProgressIndicator() ) : Container(

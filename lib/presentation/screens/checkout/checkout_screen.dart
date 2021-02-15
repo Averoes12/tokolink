@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/address.dart';
 import 'package:tokolink/model/bank.dart';
 import 'package:tokolink/model/cart.dart';
@@ -187,7 +188,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Checkout'),
+        title: Text(getTranslated(context, 'checkout')),
         centerTitle: true,
       ),
       body:  Container(
@@ -217,8 +218,8 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                                 Navigator.of(context).pop(true);
                               };
                               return CustomDialogBox(
-                                title: 'Mohon tunggu sebentar',
-                                descriptions: 'Pesanan anda sedang diproses oleh system, anda akan dialihkan ke halaman pembayaran',
+                                title: getTranslated(context, 'please_wait'),
+                                descriptions: getTranslated(context, 'order_process_by_system'),
                                 img: 'assets/img/loading.gif',
                               );
                             }
@@ -228,7 +229,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                         }
                       },
                       textColor: Colors.white,
-                      child: Text('Selesaikan Pesanan'),
+                      child: Text(getTranslated(context, 'btn_complete_order')),
                     ),
                   ],
                 ),
@@ -353,7 +354,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Sub Total:'),
+                        Text('${getTranslated(context, 'order_subtotal')}:'),
                         Text(
                           formatCurrency.format( total ),
                           style: TextStyle(
@@ -366,9 +367,9 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Ongkos kirim:'),
+                        Text('${getTranslated(context, 'order_postage')}:'),
                         Text(
-                          (_shippingLoading) ? 'Loading...' : formatCurrency.format( _ongkir ),
+                          (_shippingLoading) ? getTranslated(context, 'loading') : formatCurrency.format( _ongkir ),
                           style: TextStyle(
                             color: ColorConfig.PRIMARY,
                           ),
@@ -379,7 +380,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Total:'),
+                        Text('${getTranslated(context, 'order_total')}:'),
                         Text(
                           formatCurrency.format( total+_ongkir ),
                           style: TextStyle(
@@ -421,7 +422,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
               Row(children: [
                 Image.asset('assets/icons/address.png'),
                 SizedBox(width: 10),
-                Text('Alamat Pengiriman', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_shipping_address'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),
@@ -450,7 +451,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
               Row(children: [
                 Image.asset('assets/icons/address.png'),
                 SizedBox(width: 10),
-                Text('Alamat Pengiriman', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_shipping_address'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),
@@ -480,7 +481,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
               Row(children: [
                 Image.asset('assets/icons/address.png'),
                 SizedBox(width: 10),
-                Text('Alamat Pengiriman', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_shipping_address'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),
@@ -500,7 +501,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                       }
                     },
                     textColor: ColorConfig.N3,
-                    child: Text('Add New Address'),
+                    child: Text(getTranslated(context, 'btn_new_address')),
                   ),
                 ),
               ),
@@ -527,7 +528,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
               Row(children: [
                 Image.asset('assets/icons/payment.png'),
                 SizedBox(width: 10),
-                Text('Pembayaran', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_payment'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),
@@ -536,7 +537,7 @@ class _CheckoutSectionState extends State<CheckoutSection> with HasSizeMixin {
                 Image.asset('assets/img/'+ selectedBank?.code?.toLowerCase() +'.png', height: 20),
                 SizedBox(width: 10),
                 Text(selectedBank?.name, style: TextStyle(fontWeight: FontWeight.bold)),
-              ]) : Text('Loading...'),
+              ]) : Text(getTranslated(context, 'loading')),
             ]
           )
         ),

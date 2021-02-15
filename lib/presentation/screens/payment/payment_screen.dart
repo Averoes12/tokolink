@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/bank.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
 class PaymentScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pembayaran'),
+        title: Text(getTranslated(context, 'order_payment')),
         centerTitle: true,
       ),
       body: Container(

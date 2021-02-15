@@ -8,6 +8,7 @@ import 'package:flutter_html/style.dart';
 import 'package:intl/intl.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/bank.dart';
 import 'package:tokolink/presentation/screens/main_screen.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
@@ -73,7 +74,7 @@ class _PaymentSectionState extends State<PaymentSection> with HasSizeMixin {
         key: _scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Pembayaran'),
+          title: Text(getTranslated(context, 'order_payment')),
           centerTitle: true,
         ),
         body:  Container(
@@ -156,15 +157,15 @@ class _PaymentSectionState extends State<PaymentSection> with HasSizeMixin {
                     SizedBox(height: 20),
                     Column(
                       children: [
-                        Text('Jumlah yang harus dibayar :'),
+                        Text('${getTranslated(context, 'payment_amount')} :'),
                         SizedBox(height: 10),
                         Text(formatCurrency.format( widget.data['amount'] ),style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: ColorConfig.PRIMARY)),
                         SizedBox(height: 10),
                         OutlineButton(
-                          child: Text('Salin jumlah', style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
+                          child: Text(getTranslated(context, 'copy_amount'), style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
                           onPressed: (){
                               FlutterClipboard.copy(widget.data['amount'].toString()).then(( value ) async {
-                                final snackBar = SnackBar(content: Text('Jumlah pembayaran berhasil disalin'));
+                                final snackBar = SnackBar(content: Text(getTranslated(context, 'copy_amt_success')));
                                 _scaffoldKey.currentState.showSnackBar(snackBar);
                               });
                           },
@@ -191,21 +192,21 @@ class _PaymentSectionState extends State<PaymentSection> with HasSizeMixin {
     print(ind);
     return Column(
       children: [
-        Text('SEGERA LAKUKAN PEMBAYARAN SEBELUM:'),
+        Text('${getTranslated(context, 'payment_before')}:'),
         SizedBox(height: 10),
         Text(formatted,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         SizedBox(height: 25),
-        Text('Transfer pembayaran ke nomor Virtual Account :'),
+        Text('${getTranslated(context, 'va_number')} :'),
         SizedBox(height: 10),
         Image.asset('assets/img/'+ widget.bank.code.toLowerCase() +'.png', height: 30),
         SizedBox(height: 10),
         Text(widget.data['available_banks'][ind]['bank_account_number'],style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         SizedBox(height: 10),
         OutlineButton(
-          child: Text('Salin no. Rek', style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
+          child: Text(getTranslated(context, 'copy_account_number'), style: TextStyle(fontSize: 12,color: ColorConfig.PRIMARY)),
           onPressed: (){
               FlutterClipboard.copy(widget.data['available_banks'][ind]['bank_account_number'].toString()).then(( value ) async {
-                final snackBar = SnackBar(content: Text('No. Rekening berhasil disalin'));
+                final snackBar = SnackBar(content: Text(getTranslated(context, 'copy_acc_number_success')));
                 _scaffoldKey.currentState.showSnackBar(snackBar);
               });
           },
@@ -230,7 +231,7 @@ class _PaymentSectionState extends State<PaymentSection> with HasSizeMixin {
               Row(children: [
                 Image.asset('assets/icons/payment.png'),
                 SizedBox(width: 10),
-                Text('Cara Pembayaran', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'payment_method'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),

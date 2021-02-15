@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/address.dart';
 import 'package:tokolink/model/bank.dart';
 import 'package:tokolink/model/shipping.dart';
@@ -80,7 +81,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Order Detail'),
+        title: Text(getTranslated(context, 'order_detail')),
         centerTitle: true,
       ),
       body:  Container(
@@ -106,7 +107,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
                       getInvoice();
                     },
                     textColor: Colors.white,
-                    child: (loading) ? Text('Loading...') : Text('Selesaikan Pembayaran'),
+                    child: (loading) ? Text(getTranslated(context, 'loading')) : Text(getTranslated(context, 'btn_complete_order')),
                   ) : Container()
                   ],
                 ),
@@ -231,7 +232,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Sub Total:'),
+                        Text('${getTranslated(context, 'order_subtotal')}:'),
                         Text(
                           formatCurrency.format( int.parse(widget.transaction.subtotal) ),
                           style: TextStyle(
@@ -244,7 +245,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Ongkos kirim:'),
+                        Text('${getTranslated(context, 'order_postage')}:'),
                         Text(
                           formatCurrency.format( int.parse(widget.transaction.shipping) ),
                           style: TextStyle(
@@ -257,7 +258,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Total:'),
+                        Text('${getTranslated(context, 'order_total')}:'),
                         Text(
                           formatCurrency.format( int.parse(widget.transaction.total) ),
                           style: TextStyle(
@@ -294,7 +295,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
               Row(children: [
                 Image.asset('assets/icons/order.png'),
                 SizedBox(width: 10),
-                Text('Detail Pesanan', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_detail'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),
@@ -302,15 +303,15 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('Status Pesanan'),
+                Text(getTranslated(context, 'order_status')),
                 SizedBox(width: 10),
-                Text(widget.transaction.status, style: TextStyle(fontWeight: FontWeight.bold, color: ColorConfig.PRIMARY))
+                Text(translateStatus(context, widget.transaction.status), style: TextStyle(fontWeight: FontWeight.bold, color: ColorConfig.PRIMARY))
               ]),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('Tanggal pembelian'),
+                Text(getTranslated(context, 'order_purchase_date')),
                 SizedBox(width: 10),
                 Text(formatted, style: TextStyle(fontWeight: FontWeight.bold))
               ])
@@ -334,7 +335,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
               Row(children: [
                 Image.asset('assets/icons/address.png'),
                 SizedBox(width: 10),
-                Text('Alamat Pengiriman', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_shipping_address'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),
@@ -368,7 +369,7 @@ class _OrderDetailSectionState extends State<OrderDetailSection> with HasSizeMix
               Row(children: [
                 Image.asset('assets/icons/payment.png'),
                 SizedBox(width: 10),
-                Text('Pembayaran', style: TextStyle(fontWeight: FontWeight.bold))
+                Text(getTranslated(context, 'order_payment'), style: TextStyle(fontWeight: FontWeight.bold))
               ]),
               SizedBox(height: 10),
               DashedDivider(),

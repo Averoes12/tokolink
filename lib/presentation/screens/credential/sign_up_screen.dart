@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
 import 'package:http/http.dart' as http;
@@ -69,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: Text(getTranslated(context, 'sign_up')),
         centerTitle: true,
       ),
       body: Container(
@@ -81,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 SizedBox(height: 20),
-                LabelWidget(text: 'Username'),
+                LabelWidget(text: getTranslated(context, 'username')),
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
@@ -90,86 +91,86 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
                   ],
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   validator: (v) {
-                    if (v.isEmpty) return 'Username harus diisi';
+                    if (v.isEmpty) return getTranslated(context, 'empty_username');
                     return null;
                   },
                   onSaved: (v) => setState(() => _username = v),
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Username Anda',
+                    hintText: getTranslated(context, 'username_hint'),
                     prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                 ),
                 SizedBox(height: 10),
-                LabelWidget(text: 'Nama'),
+                LabelWidget(text: getTranslated(context, 'name')),
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   validator: (v) {
-                    if (v.isEmpty) return 'Nama harus diisi';
+                    if (v.isEmpty) return getTranslated(context, 'empty_name');
                     return null;
                   },
                   onSaved: (v) => setState(() => _name = v),
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Nama Anda',
+                    hintText: getTranslated(context, 'name_hint'),
                     prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                 ),
                 SizedBox(height: 10),
-                LabelWidget(text: 'Password'),
+                LabelWidget(text: getTranslated(context, 'password')),
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   obscureText: _obscureText,
                   validator: (v) {
-                    if (v.isEmpty) return 'Password harus diisi';
+                    if (v.isEmpty) return getTranslated(context, 'empty_password');
                     return null;
                   },
                   onSaved: (v) => setState(() => _password = v),
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Password Anda',
+                    hintText: getTranslated(context, 'password_hint'),
                     prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                 ),
                 SizedBox(height: 10),
-                LabelWidget(text: 'Ulangi Password'),
+                LabelWidget(text: getTranslated(context, 're_type_password')),
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   obscureText: _obscureText,
                   validator: (v) {
-                    if (v.isEmpty) return 'Ulangi Password harus diisi';
+                    if (v.isEmpty) return getTranslated(context, 'empty_re_type_password');
                     return null;
                   },
                   onSaved: (v) => setState(() => _repassword = v),
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Lagi Password Anda',
+                    hintText: getTranslated(context, 're_type_password_hint'),
                     prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                 ),
                 SizedBox(height: 10),
-                LabelWidget(text: 'Telephone Number'),
+                LabelWidget(text: getTranslated(context, 'phone_number')),
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.number,
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   validator: (v) {
-                    if (v.isEmpty) return 'Nomor diperlukan';
-                    if (v.substring(0, 1) == '0' || v.length < 10 || v.length > 12) return 'Format nomer salah';
+                    if (v.isEmpty) return getTranslated(context, 'empty_number');
+                    if (v.substring(0, 1) == '0' || v.length < 10 || v.length > 12) return getTranslated(context, 'err_format_number');
                     return null;
                   },
                   onSaved: (v) => setState(() => _phone = v),
                   decoration: InputDecoration(
                     prefixText: '+62 | ',
-                    hintText: 'Phone number',
+                    hintText: getTranslated(context, 'phone_number_hint'),
                     prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                 ),
                 SizedBox(height: 10),
-                LabelWidget(text: 'Email'),
+                LabelWidget(text: getTranslated(context, 'email')),
                 TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.text,
@@ -178,12 +179,12 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
                   ],
                   style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                   validator: (v) {
-                    if (v.isEmpty) return 'Email harus diisi';
+                    if (v.isEmpty) return getTranslated(context, 'empty_email');
                     return null;
                   },
                   onSaved: (v) => setState(() => _email = v),
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Email Anda',
+                    hintText: getTranslated(context, 'email_hint'),
                     prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                   ),
                 ),
@@ -199,7 +200,7 @@ class _SignUpScreenState extends State<SignUpScreen> with HasFormKeyMixin {
                     }
                   },
                   textColor: Colors.white,
-                  child: (_loading) ? Text('Loading ...'): Text('Continue'),
+                  child: (_loading) ? Text(getTranslated(context, 'loading')): Text(getTranslated(context, 'btn_continue')),
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/address.dart';
 import 'address_add_screen.dart';
 
@@ -67,7 +68,7 @@ class _AddressScreenState extends State<AddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Address'),
+        title: Text(getTranslated(context, 'address')),
         centerTitle: true,
       ),
       body: (_addressLoading) ? Center(child:CircularProgressIndicator() ): Container(
@@ -99,7 +100,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       child: FlatButton(
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddressAddScreen())),
                         textColor: ColorConfig.N3,
-                        child: Text('Add New Address'),
+                        child: Text(getTranslated(context, 'btn_new_address')),
                       ),
                     ),
                   ),
@@ -131,7 +132,7 @@ class _AddressScreenState extends State<AddressScreen> {
               Row(children: [
                 Text(address.name, style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(width: 5),
-                Text((address.isprimary == '1') ? '(Primary)' : '')
+                Text((address.isprimary == '1') ? '(${getTranslated(context, 'primary')})' : '')
               ]),
               SizedBox(height: 5),
               Text(address.phone),

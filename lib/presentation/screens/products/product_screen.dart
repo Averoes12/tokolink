@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/product.dart';
 import 'package:tokolink/presentation/screens/widgets/single_product_grid.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
@@ -61,7 +62,7 @@ class _ProductScreenState extends State<ProductScreen> with HasSizeMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text(translateCategory(context, widget.name)),
         centerTitle: true,
       ),
       body: Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:tokolink/localization/localization_const.dart';
 
 class PickLocation extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _PickLocationState extends State<PickLocation> {
               print('result = $result');
               setState(() => _pickedLocation = result);
             },
-            child: Text('Pick location'),
+            child: Text(getTranslated(context, 'btn_pick_loc')),
           ),
           Text(_pickedLocation.toString()),
         ],

@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
 import 'package:http/http.dart' as http;
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/product.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
 class ManageProductScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _ManageProductScreenState extends State<ManageProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manage Product'),
+        title: Text(getTranslated(context, 'manage_product')),
         centerTitle: true,
       ),
       body: (loading) ? Center(child:CircularProgressIndicator() ) : Container(

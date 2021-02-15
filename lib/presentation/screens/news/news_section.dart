@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/utils/mixins/has_size_mixin.dart';
 
 import 'widgets/single_news_list.dart';
@@ -16,7 +17,7 @@ class _NewsSectionState extends State<NewsSection> with HasSizeMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(height: appSize.blockSizeVertical * 6),
-          Text('News', textAlign: TextAlign.center, style: TextStyle(fontSize: 24)),
+          Text(getTranslated(context, 'news'), textAlign: TextAlign.center, style: TextStyle(fontSize: 24)),
           SizedBox(height: appSize.blockSizeVertical * 2),
           Expanded(
             child: SingleChildScrollView(

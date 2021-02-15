@@ -6,6 +6,7 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
@@ -61,7 +62,7 @@ class _AddressAddScreenState extends State<AddressAddScreen> with HasFormKeyMixi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Address'),
+        title: Text(getTranslated(context, 'add_address')),
         centerTitle: true,
       ),
       body: Container(
@@ -82,35 +83,35 @@ class _AddressAddScreenState extends State<AddressAddScreen> with HasFormKeyMixi
                           child:Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
-                              LabelWidget(text: 'Nama Lengkap'),
+                              LabelWidget(text: getTranslated(context, 'full_name_profile')),
                               TextFormField(
                                 autofocus: true,
                                 controller: name,
                                 enabled: true,
                                 style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                                 validator: (v) {
-                                  if (v.isEmpty) return 'Nama harus diisi';
+                                  if (v.isEmpty) return getTranslated(context, 'empty_name');
                                   return null;
                                 },
                                 onSaved: (v) => setState(() => _name = v),
-                                decoration: InputDecoration(hintText: 'Nama lengkap penerima'),
+                                decoration: InputDecoration(hintText: getTranslated(context, 'recipient_name')),
                               ),
                               SizedBox(height: 10),
-                              LabelWidget(text: 'Nomor Telepon'),
+                              LabelWidget(text: getTranslated(context, 'phone_number')),
                               TextFormField(
                                 autofocus: true,
                                 controller: phone,
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                                 validator: (v) {
-                                  if (v.isEmpty) return 'Nomor diperlukan';
-                                  if (v.substring(0, 1) == '0' || v.length < 10 || v.length > 12) return 'Format nomer salah';
+                                  if (v.isEmpty) return getTranslated(context, 'empty_number');
+                                  if (v.substring(0, 1) == '0' || v.length < 10 || v.length > 12) return getTranslated(context, 'err_format_number');
                                   return null;
                                 },
                                 onSaved: (v) => setState(() => _phone = v),
                                 decoration: InputDecoration(
                                   prefixText: '+62 | ',
-                                  hintText: 'Phone number',
+                                  hintText: getTranslated(context, 'phone_number'),
                                   prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                                 ),
                               ),
@@ -132,7 +133,7 @@ class _AddressAddScreenState extends State<AddressAddScreen> with HasFormKeyMixi
                                   pickCoordinat();
                                 },
                                 textColor: Colors.white,
-                                child: Text('Pilih koordinat'),
+                                child: Text(getTranslated(context, 'choose_cord')),
                               ),
 
                               SizedBox(height: 10),
@@ -149,7 +150,7 @@ class _AddressAddScreenState extends State<AddressAddScreen> with HasFormKeyMixi
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             LabelWidget(
-                              text: 'Set as primary',
+                              text: getTranslated(context, 'set_as_primary'),
                             ),
                             Checkbox(value: checked, onChanged: (v) => setState(() => checked = v)),
                           ],
@@ -172,7 +173,7 @@ class _AddressAddScreenState extends State<AddressAddScreen> with HasFormKeyMixi
                 },
                 color: (_pickedLocation.address != null) ? ColorConfig.PRIMARY : Colors.grey[300],
                 textColor: Colors.white,
-                child: (_loading) ? Text('Loading ...'): Text('Simpan'),
+                child: (_loading) ? Text(getTranslated(context, 'loading')): Text(getTranslated(context, 'btn_save')),
               ),
             ),
           ],

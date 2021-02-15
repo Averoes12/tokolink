@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 import 'package:tokolink/presentation/utils/mixins/has_form_key_mixin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
                   SizedBox(height: 20),
                   Image.asset('assets/img/logo.png'),
                   SizedBox(height: 40),
-                  LabelWidget(text: 'Username'),
+                  LabelWidget(text: getTranslated(context, 'username')),
                   TextFormField(
                     autofocus: true,
                     keyboardType: TextInputType.text,
@@ -96,29 +97,29 @@ class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
                     ],
                     style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                     validator: (v) {
-                      if (v.isEmpty) return 'Username harus diisi';
+                      if (v.isEmpty) return getTranslated(context, 'empty_username');
                       return null;
                     },
                     onSaved: (v) => setState(() => _username = v),
                     decoration: InputDecoration(
-                      hintText: 'Masukkan Username Anda',
+                      hintText: getTranslated(context, 'username_hint'),
                       prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                     ),
                   ),
                   SizedBox(height: 10),
-                  LabelWidget(text: 'Password'),
+                  LabelWidget(text: getTranslated(context, 'password')),
                   TextFormField(
                     autofocus: true,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                     obscureText: _obscureText,
                     validator: (v) {
-                      if (v.isEmpty) return 'Password harus diisi';
+                      if (v.isEmpty) return getTranslated(context, 'empty_password');
                       return null;
                     },
                     onSaved: (v) => setState(() => _password = v),
                     decoration: InputDecoration(
-                      hintText: 'Masukkan Password Anda',
+                      hintText: getTranslated(context, 'password_hint'),
                       prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                     ),
                   ),
@@ -132,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> with HasFormKeyMixin {
                       }
                     },
                     textColor: Colors.white,
-                    child: (_loading) ? Text('Loading...'): Text('Continue'),
+                    child: (_loading) ? Text(getTranslated(context, 'loading')): Text(getTranslated(context, 'btn_continue')),
                   ),
                 ],
               ),

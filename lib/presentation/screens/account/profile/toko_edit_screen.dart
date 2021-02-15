@@ -9,6 +9,7 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/user.dart';
 import 'package:tokolink/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:tokolink/presentation/screens/widgets/dashed_divider.dart';
@@ -92,7 +93,7 @@ class _TokoEditScreenState extends State<TokoEditScreen> {
       setState(() {
         _loading = false;
       });
-      final snackBar = SnackBar(content: Text('Profil Toko berhasil diperbarui'));
+      final snackBar = SnackBar(content: Text(getTranslated(context, 'merchant_update_success')));
       _scaffoldKey.currentState.showSnackBar(snackBar);
     }
   }
@@ -101,7 +102,7 @@ class _TokoEditScreenState extends State<TokoEditScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Edit Toko'),
+        title: Text(getTranslated(context, 'edit_merchant')),
         centerTitle: true,
       ),
       body: (loading) ? Center(child:CircularProgressIndicator()) : Container(
@@ -120,18 +121,18 @@ class _TokoEditScreenState extends State<TokoEditScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            LabelWidget(text: 'Nama Toko'),
+                            LabelWidget(text: getTranslated(context, 'merchant_name')),
                             TextFormField(
                               controller: name,
                               keyboardType: TextInputType.text,
                               textCapitalization: TextCapitalization.sentences,
                               style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                               validator: (v) {
-                                if (v.isEmpty) return 'Nama Toko harus diisi';
+                                if (v.isEmpty) return getTranslated(context, 'empty_merchant_name');
                                 return null;
                               },
                               decoration: InputDecoration(
-                                hintText: 'Masukkan Nama Toko',
+                                hintText: getTranslated(context, 'merchant_name_hint'),
                                 prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                               ),
                             ),
@@ -159,8 +160,8 @@ class _TokoEditScreenState extends State<TokoEditScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text('Alamat Toko', style: TextStyle(fontWeight: FontWeight.bold)),
-                                    Text('Klik untuk merubah alamat toko', style: TextStyle(color: Colors.grey[700], fontSize: 12))
+                                    Text(getTranslated(context, 'merchant_address'), style: TextStyle(fontWeight: FontWeight.bold)),
+                                    Text(getTranslated(context, 'sub_merchant_address'), style: TextStyle(color: Colors.grey[700], fontSize: 12))
                                   ]
                                 )
                                 
@@ -198,7 +199,7 @@ class _TokoEditScreenState extends State<TokoEditScreen> {
                   saveUser();
                 },
                 textColor: Colors.white,
-                child: Text( (_loading) ? 'Loading...' : 'Save'),
+                child: Text( (_loading) ? getTranslated(context, 'loading') : getTranslated(context, 'btn_save')),
               ),
             ),
           ],

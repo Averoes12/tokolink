@@ -7,6 +7,7 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
 import 'package:tokolink/infrastructure/constants/global.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/model/user.dart';
 import 'package:tokolink/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
@@ -84,7 +85,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       setState(() {
         _loading = false;
       });
-      final snackBar = SnackBar(content: Text('Profil berhasil diperbarui'));
+      final snackBar = SnackBar(content: Text(getTranslated(context, 'profile_update_success')));
       _scaffoldKey.currentState.showSnackBar(snackBar);
       await prefs.setString('name', name.text);
     }
@@ -94,7 +95,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: Text(getTranslated(context, 'edit_profile')),
         centerTitle: true,
       ),
       body: (loading) ? Center(child:CircularProgressIndicator()) : Container(
@@ -113,40 +114,40 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            LabelWidget(text: 'Nama Lengkap'),
+                            LabelWidget(text: getTranslated(context, 'full_name_profile')),
                             TextFormField(
                               controller: name,
                               keyboardType: TextInputType.text,
                               textCapitalization: TextCapitalization.sentences,
                               style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                               validator: (v) {
-                                if (v.isEmpty) return 'Nama harus diisi';
+                                if (v.isEmpty) return getTranslated(context, 'empty_name');
                                 return null;
                               },
                               decoration: InputDecoration(
-                                hintText: 'Masukkan Nama Anda',
+                                hintText: getTranslated(context, 'full_name_hint'),
                                 prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                               ),
                             ),
                             SizedBox(height: 10),
-                            LabelWidget(text: 'Telephone Number'),
+                            LabelWidget(text: getTranslated(context, 'phone_number')),
                             TextFormField(
                               controller: phone,
                               keyboardType: TextInputType.number,
                               style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                               validator: (v) {
-                                if (v.isEmpty) return 'Nomor diperlukan';
-                                if (v.substring(0, 1) == '0' || v.length < 10 || v.length > 12) return 'Format nomer salah';
+                                if (v.isEmpty) return getTranslated(context, 'empty_number');
+                                if (v.substring(0, 1) == '0' || v.length < 10 || v.length > 12) return getTranslated(context, 'err_format_number');
                                 return null;
                               },
                               decoration: InputDecoration(
                                 prefixText: '+62 | ',
-                                hintText: 'Phone number',
+                                hintText: getTranslated(context, 'phone_number'),
                                 prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                               ),
                             ),
                             SizedBox(height: 10),
-                            LabelWidget(text: 'Email'),
+                            LabelWidget(text: getTranslated(context, 'email')),
                             TextFormField(
                               controller: email,
                               keyboardType: TextInputType.text,
@@ -155,11 +156,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               ],
                               style: TextStyle(fontSize: 14, color: ColorConfig.PRIMARY),
                               validator: (v) {
-                                if (v.isEmpty) return 'Email harus diisi';
+                                if (v.isEmpty) return getTranslated(context, 'empty_email');
                                 return null;
                               },
                               decoration: InputDecoration(
-                                hintText: 'Masukkan Email Anda',
+                                hintText: getTranslated(context, 'email_hint'),
                                 prefixStyle: TextStyle(color: ColorConfig.PRIMARY),
                               ),
                             ),
@@ -200,7 +201,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: ListTile(
-                            title: Text('Sign Out', style: TextStyle(color: ColorConfig.PRIMARY)),
+                            title: Text(getTranslated(context, 'btn_sign_out'), style: TextStyle(color: ColorConfig.PRIMARY)),
                             trailing: Icon(Icons.arrow_forward_ios, color: ColorConfig.PRIMARY),
                           ),
                         ),
@@ -218,7 +219,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   saveUser();
                 },
                 textColor: Colors.white,
-                child: Text( (_loading) ? 'Loading...' : 'Save'),
+                child: Text( (_loading) ? getTranslated(context, 'loading') : getTranslated(context, 'btn_save')),
               ),
             ),
           ],

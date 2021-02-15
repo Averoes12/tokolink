@@ -13,7 +13,6 @@ class RootScreen extends StatefulWidget {
   static void setLocale(BuildContext context, Locale newLocale) {
     var state = context.findAncestorStateOfType<_RootScreenState>();
     state.setLocale(newLocale);
-    print('Set New Local => ${newLocale}');
   }
 
   @override
@@ -43,20 +42,15 @@ class _RootScreenState extends State<RootScreen> {
     setState(() {
       _locale = locale;
     });
-    print('SET LOCALE => $_locale');
-    return _locale;
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print('enter didChangeDependencies');
     getLocale().then((locale){
       setState(() {
         _locale = locale;
       });
-      print('Get Locale => $_locale');
-      return _locale;
     });
   }
 
@@ -67,6 +61,7 @@ class _RootScreenState extends State<RootScreen> {
       theme: StyleConfig.defaultStyle,
       builder: _materialBuilder,
       home: OnBoardingScreen(),
+      locale: _locale,
       supportedLocales: [
         Locale('id', 'ID'),
         Locale('en', 'US')
@@ -81,7 +76,6 @@ class _RootScreenState extends State<RootScreen> {
         for(var supportedLocale in supportedLocales) {
           if(supportedLocale.languageCode == locale.languageCode &&
               supportedLocale.countryCode == locale.countryCode) {
-            print('SupportedLocale => ${supportedLocale.languageCode}');
             return supportedLocale;
           }
         }

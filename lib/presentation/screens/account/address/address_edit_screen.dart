@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:tokolink/infrastructure/constants/colors.dart';
+import 'package:tokolink/localization/localization_const.dart';
 import 'package:tokolink/presentation/screens/widgets/label_widget.dart';
 
 class AddressEditScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _AddressEditScreenState extends State<AddressEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Address'),
+        title: Text(getTranslated(context, 'edit_address')),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -35,10 +36,10 @@ class _AddressEditScreenState extends State<AddressEditScreen> {
               showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                        content: Text('Do you want to delete this address ?'),
+                        content: Text(getTranslated(context, 'dialog_delete')),
                         actions: <Widget>[
-                          FlatButton(onPressed: () {}, child: Text('No')),
-                          FlatButton(onPressed: () {}, child: Text('Yes')),
+                          FlatButton(onPressed: () {}, child: Text(getTranslated(context, 'no'))),
+                          FlatButton(onPressed: () {}, child: Text(getTranslated(context, 'yes'))),
                         ],
                       ));
             },
@@ -61,23 +62,23 @@ class _AddressEditScreenState extends State<AddressEditScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            LabelWidget(text: 'Full name'),
+                            LabelWidget(text: getTranslated(context, 'full_name_profile')),
                             TextFormField(
                               enabled: true,
-                              decoration: InputDecoration(hintText: 'Input full name.'),
+                              decoration: InputDecoration(hintText: getTranslated(context, 'full_name_hint')),
                             ),
                             SizedBox(height: 10),
-                            LabelWidget(text: 'Telephone number'),
+                            LabelWidget(text: getTranslated(context, 'phone_number')),
                             TextFormField(
                               enabled: true,
-                              decoration: InputDecoration(hintText: 'Input telephone number.'),
+                              decoration: InputDecoration(hintText: getTranslated(context, 'phone_number_hint')),
                             ),
                             SizedBox(height: 10),
-                            LabelWidget(text: 'Address'),
+                            LabelWidget(text: getTranslated(context, 'address')),
                             TextFormField(
                               enabled: true,
                               maxLines: 4,
-                              decoration: InputDecoration(hintText: 'Input address.'),
+                              decoration: InputDecoration(hintText: getTranslated(context, 'address_hint')),
                             ),
                           ],
                         ),
@@ -91,7 +92,7 @@ class _AddressEditScreenState extends State<AddressEditScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             LabelWidget(
-                              text: 'Set as primary',
+                              text: getTranslated(context, 'set_as_primary'),
                             ),
                             Checkbox(value: checked, onChanged: (v) => setState(() => checked = v)),
                           ],
@@ -107,7 +108,7 @@ class _AddressEditScreenState extends State<AddressEditScreen> {
               child: RaisedButton(
                 onPressed: () {},
                 textColor: Colors.white,
-                child: Text('Save'),
+                child: Text(getTranslated(context, 'btn_save')),
               ),
             ),
           ],
